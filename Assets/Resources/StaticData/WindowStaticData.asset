@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74a9bc9fd2e863b4ba037fcb31d1a569, type: 3}
+  m_Name: WindowStaticData
+  m_EditorClassIdentifier: 
+  <Configs>k__BackingField:
+  - _name: Transfer Level Button
+    WindowId: 99
+    Template: {fileID: 3107981456333430166, guid: c0b5f5adaaa827b438c69d774b75c10d,
+      type: 3}
+  - _name: Level Timer
+    WindowId: 2
+    Template: {fileID: 6546449766015378036, guid: 896922b1b93ba694997c76e347d2f41b,
+      type: 3}
+  - _name: Level Info Text
+    WindowId: 101
+    Template: {fileID: 1417952550753891462, guid: 555a0f011295a994c95dd3055c499d47,
+      type: 3}
+  - _name: Input
+    WindowId: 1
+    Template: {fileID: 8045515740875279370, guid: 4391958f29f84b94ab025beaccb5d07e,
+      type: 3}
+  - _name: MainMenu
+    WindowId: 3
+    Template: {fileID: 6407989799255386207, guid: e84347f12b7e7044fbab1ade0f5fef26,
+      type: 3}
+  - _name: Settings
+    WindowId: 4
+    Template: {fileID: 5254974287364297516, guid: 4bb5f7d245bd3d545b8e7cb06d91bd0c,
+      type: 3}
+  - _name: Load Main Menu State Button
+    WindowId: 102
+    Template: {fileID: 1730246826787047921, guid: 82ba836d12061c044bb4eedeb7840fa0,
+      type: 3}
