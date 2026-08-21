@@ -50,11 +50,11 @@ namespace CodeBase.Player
         }
 
         private void UpdateMove() =>
-            _activeState = Mathf.Abs(_rigidbody.velocity.x) > Epsilon ? MoveState.Running : MoveState.Idle;
+            _activeState = Mathf.Abs(_rigidbody.linearVelocity.x) > Epsilon ? MoveState.Running : MoveState.Idle;
 
         private void UpdateJump()
         {
-            _activeState = (_rigidbody.velocity.y > Epsilon) ? MoveState.Jump : (_rigidbody.velocity.y < -Epsilon) ? MoveState.Fall : _activeState;
+            _activeState = (_rigidbody.linearVelocity.y > Epsilon) ? MoveState.Jump : (_rigidbody.linearVelocity.y < -Epsilon) ? MoveState.Fall : _activeState;
         }
 
         private void SetState()
@@ -70,7 +70,7 @@ namespace CodeBase.Player
 
         private void Flip()
         {
-            _spriteRenderer.flipX = (_rigidbody.velocity.x < -Epsilon) || ((_rigidbody.velocity.x > Epsilon) ? false : _spriteRenderer.flipX);
+            _spriteRenderer.flipX = (_rigidbody.linearVelocity.x < -Epsilon) || ((_rigidbody.linearVelocity.x > Epsilon) ? false : _spriteRenderer.flipX);
             //_spriteRenderer.flipX = (_input.MoveAxis < 0) || ((_input.MoveAxis > 0) ? false : _spriteRenderer.flipX);
         }
     }

@@ -1,4 +1,3 @@
-using Cinemachine;
 using CodeBase.Infrastructure.Logic;
 using CodeBase.Logic;
 using CodeBase.Services.Factory;
@@ -8,6 +7,7 @@ using CodeBase.Services.SaveLoad;
 using CodeBase.StaticData.Audio;
 using CodeBase.UI.Services.Factory;
 using CodeBase.UI.Services.Window;
+using Unity.Cinemachine;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.StatesMachine.States
@@ -79,7 +79,6 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         private void InitComponentsInScene()
         {
             InitSawSpawners();
-            InitDestroyBlockTime();
         }
 
         private void InitFinish()
@@ -87,9 +86,6 @@ namespace CodeBase.Infrastructure.StatesMachine.States
             _componentContainer.Finish.GetComponent<SaveLevelTime>().Construct(_saveLoadService, _persistentProgressService);
             _componentContainer.Finish.GetComponent<LevelTransfer>().Construct(_stateMachine);
         }
-
-        private void InitDestroyBlockTime() =>
-            _componentContainer.BlockTimers.ForEach(x => x.Construct(_gameFactory));
 
         private void InitSawSpawners()
         {

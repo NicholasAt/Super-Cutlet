@@ -8,6 +8,6 @@ namespace CodeBase.Player.PlayerMove
         public GroundChecker(Rigidbody2D rigidbody) => 
             _rigidbody = rigidbody;
         public bool IsGround() => 
-            Mathf.Abs(_rigidbody.velocity.y) < 0.1f; //Epsilon
+            Mathf.Abs(_rigidbody.linearVelocity.y) < 0.1f; //Epsilon
     }
 }

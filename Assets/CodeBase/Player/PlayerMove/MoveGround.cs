@@ -61,11 +61,11 @@ namespace CodeBase.Player.PlayerMove
                 if (_input.MoveAxis == 0)
                     return;
             }
-            _rigidbody.velocity = new Vector2(SmoothSpeed(), _rigidbody.velocity.y);
+            _rigidbody.linearVelocity = new Vector2(SmoothSpeed(), _rigidbody.linearVelocity.y);
         }
 
         private float SmoothSpeed() =>
-            Mathf.Lerp(_rigidbody.velocity.x, _config.SpeedMove * _input.MoveAxis, _config.SmoothMoveSpeed * Time.fixedDeltaTime);
+            Mathf.Lerp(_rigidbody.linearVelocity.x, _config.SpeedMove * _input.MoveAxis, _config.SmoothMoveSpeed * Time.fixedDeltaTime);
 
         private void Jump()
         {

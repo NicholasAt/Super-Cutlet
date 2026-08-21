@@ -61,7 +61,7 @@ namespace CodeBase.Player.PlayerMove
         }
 
         private void Move() =>
-            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, LimitedVelocityY());
+            _rigidbody.linearVelocity = new Vector2(_rigidbody.linearVelocity.x, LimitedVelocityY());
 
         private bool ChangeStateCondition()
         {
@@ -87,7 +87,7 @@ namespace CodeBase.Player.PlayerMove
         }
 
         private float LimitedVelocityY() =>
-            (_rigidbody.velocity.y < _config.MaxVelocityDownSpeed) ? _config.MaxVelocityDownSpeed : _rigidbody.velocity.y;
+            (_rigidbody.linearVelocity.y < _config.MaxVelocityDownSpeed) ? _config.MaxVelocityDownSpeed : _rigidbody.linearVelocity.y;
 
         private IEnumerator JumpForceTimer()
         {
@@ -113,6 +113,6 @@ namespace CodeBase.Player.PlayerMove
         }
 
         private void ClearVelocity(bool horizontal = false, bool vertical = false) =>
-            _rigidbody.velocity = new Vector2(horizontal ? 0 : _rigidbody.velocity.x, vertical ? 0 : _rigidbody.velocity.y);
+            _rigidbody.linearVelocity = new Vector2(horizontal ? 0 : _rigidbody.linearVelocity.x, vertical ? 0 : _rigidbody.linearVelocity.y);
     }
 }
