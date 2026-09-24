@@ -15,8 +15,33 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 05421dac32575dd41b475d64b4d3b21b
   m_SerializeEntries:
+  - m_GUID: 136f0d23bb3f3914b9dccf596bd7dc3b
+    m_Address: MapLevelPlayer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 431f6c133efd11a48a50c256646a5165
+    m_Address: AudioPlayer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7ff3366313b4124428aa76fcc12c2b05
     m_Address: Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a7fcc1d881de65e44a9b79ed3276dc37
+    m_Address: Fx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e6251a459a8259e48a4ee35f504bc519
+    m_Address: CM vcam1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e6aa0d9c2201d1341b368182504a7fa3
+    m_Address: FlyingSaw
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

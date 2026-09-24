@@ -73,13 +73,13 @@ namespace CodeBase.Infrastructure.StatesMachine.States
             await _uiFactory.CreateUIRoot();
             await _uiFactory.CreateInput();
             await _windowService.Open(WindowId.LoadMainMenuStateButton);
-            _gameFactory.CreateAudioPlayer(AudioConfigId.Levels);
+            _gameFactory.CreateAudioPlayer(AudioConfigId.Levels).Forget();
 
             InitFinish();
             InitComponentsInScene();
             InitUpdateTimerText();
             GameObject player = await _gameFactory.CreatePlayer(GameObject.FindGameObjectWithTag(PlayerInitialPointTag).transform.position);
-            InitCamera(player.transform);
+            await InitCamera(player.transform);
 
             _stateMachine.Enter<LoopState>();
         }
@@ -107,9 +107,9 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         private void FindComponentContainer() =>
             _componentContainer = Object.FindAnyObjectByType<SceneComponentContainer>();
 
-        private void InitCamera(Transform playerTransform)
+        private async UniTask InitCamera(Transform playerTransform)
         {
-            GameObject camera = _gameFactory.CreateCmvCamera();
+            GameObject camera = await _gameFactory.CreateCmvCamera();
             camera.GetComponent<CinemachineCamera>().Follow = playerTransform;
             camera.GetComponent<CinemachineConfiner2D>().BoundingShape2D = _componentContainer.CameraConfinerCollider;
         }

@@ -60,8 +60,8 @@ namespace CodeBase.Infrastructure.StatesMachine.States
             LoadSettingsOrInitNew();
 
             await _uiFactory.CreateUIRoot();
-          await  _windowService.Open(WindowId.MainMenu);
-            _gameFactory.CreateAudioPlayer(AudioConfigId.MainMenu);
+            await _windowService.Open(WindowId.MainMenu);
+            _gameFactory.CreateAudioPlayer(AudioConfigId.MainMenu).Forget();
             _gameStateMachine.Enter<LoopState>();
         }
 

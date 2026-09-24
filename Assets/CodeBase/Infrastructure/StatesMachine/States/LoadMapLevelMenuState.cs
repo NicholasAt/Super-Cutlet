@@ -62,12 +62,12 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         private async UniTask InitWorld()
         {
             await _uiFactory.CreateUIRoot();
-            _gameFactory.CreateAudioPlayer(AudioConfigId.MapLevel);
+            _gameFactory.CreateAudioPlayer(AudioConfigId.MapLevel).Forget();
             InitSlotContainer();
             InitInfoLevelText();
             InitTransferLevelButton();
-            InitPlayer();
-          await  _windowService.Open(WindowId.LoadMainMenuStateButton);
+            await InitPlayer();
+            await _windowService.Open(WindowId.LoadMainMenuStateButton);
 
             _gameStateMachine.Enter<LoopState>();
         }
@@ -83,8 +83,10 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         private void InitTransferLevelButton() =>
             _uiFactory.CreateLevelTransferButton(_componentContainer.SlotContainer);
 
-        private void InitPlayer() =>
-            _gameFactory.CreatePlayerInLevelMap(_componentContainer.SlotContainer, GameObject.FindGameObjectWithTag(PlayerInitialPointTag).transform.position);
+        private async UniTask InitPlayer()
+        {
+            await _gameFactory.CreatePlayerInLevelMap(_componentContainer.SlotContainer, GameObject.FindGameObjectWithTag(PlayerInitialPointTag).transform.position);
+        }
 
         private void FindComponentContainer() =>
             _componentContainer = Object.FindAnyObjectByType<MapLevelComponentContainer>();

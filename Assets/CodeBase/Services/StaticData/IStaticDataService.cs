@@ -1,4 +1,5 @@
-﻿using CodeBase.StaticData.Audio;
+﻿using CodeBase.StaticData;
+using CodeBase.StaticData.Audio;
 using CodeBase.StaticData.Player;
 using CodeBase.StaticData.Windows;
 using CodeBase.UI.Services.Window;
@@ -13,5 +14,6 @@ namespace CodeBase.Services.StaticData
         AudioConfig ForAudio(AudioConfigId configId);
         PlayerStaticData PlayerData();
         AssetReferenceGameObject UIRootReference();
+        AssetReferenceStaticData GetAssetsData();
     }
 }

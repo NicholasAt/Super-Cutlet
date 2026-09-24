@@ -8,7 +8,7 @@ namespace CodeBase.Infrastructure.Logic
         private Vector2 _direction = Vector2.zero;
 
         private void Update() => 
-            transform.Translate(_direction * _speed * Time.deltaTime);
+            transform.Translate(_speed * Time.deltaTime * _direction);
 
         public void StartMove(Vector2 direction) => 
             _direction = direction;

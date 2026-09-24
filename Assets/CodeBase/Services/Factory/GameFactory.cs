@@ -9,6 +9,8 @@ using CodeBase.Services.ReloadScene;
 using CodeBase.Services.StaticData;
 using CodeBase.StaticData.Audio;
 using Cysharp.Threading.Tasks;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -31,8 +33,14 @@ namespace CodeBase.Services.Factory
             _persistentProgressService = persistentProgressService;
         }
 
-        public void CreateFx(Vector2 at) =>
-            _assetProvider.Instantiate(AssetsPath.Fx, at);
+        public async UniTask<GameObject> CreateFlySaw(Vector2 at, Vector3 scale, CancellationToken ct)
+        {
+            AssetReferenceGameObject reference = _staticDataService.GetAssetsData().FlySawReference;
+            GameObject prefab = await _assetProvider.LoadAsync<GameObject>(reference, ct);
+            GameObject instantiate = Object.Instantiate(prefab, at, Quaternion.identity);
+            instantiate.transform.localScale = scale;
+            return instantiate;
+        }
 
         public async UniTask<GameObject> CreatePlayer(Vector2 at)
         {
@@ -48,28 +56,31 @@ namespace CodeBase.Services.Factory
             return instantiate;
         }
 
-        public void CreateAudioPlayer(AudioConfigId id)
+        public async UniTask CreateFX(Vector2 at, CancellationToken ct)
         {
-            AudioPlayer audioPlayer = _assetProvider.Instantiate(AssetsPath.AudioPlayer).GetComponent<AudioPlayer>();
-            audioPlayer?.Construct(_staticDataService, _persistentProgressService);
-            audioPlayer.Play(id);
+            GameObject prefab = await _assetProvider.LoadAsync<GameObject>(_staticDataService.GetAssetsData().FxReference, ct);
+            Object.Instantiate(prefab, at, Quaternion.identity);
         }
 
-        public GameObject CreatePlayerInLevelMap(MapLevelSlotContainer slotContainer, Vector2 at)
+        public async UniTask CreateAudioPlayer(AudioConfigId id)
         {
-            GameObject instance = _assetProvider.Instantiate(AssetsPath.MapLevelPlayer, at);
+            GameObject prefab = await _assetProvider.LoadAsync<GameObject>(_staticDataService.GetAssetsData().AudioPlayerReference);
+            AudioPlayer audioPlayer = Object.Instantiate(prefab).GetComponent<AudioPlayer>();
+            audioPlayer.Construct(_staticDataService, _persistentProgressService);
+            audioPlayer.Play(id);
+        }
+        public async UniTask<GameObject> CreatePlayerInLevelMap(MapLevelSlotContainer slotContainer, Vector2 at)
+        {
+            GameObject prefab = await _assetProvider.LoadAsync<GameObject>(_staticDataService.GetAssetsData().MapLevelPlayerReference);
+            GameObject instance = Object.Instantiate(prefab, at, Quaternion.identity);
             instance.GetComponent<PlayerMoveInMapLevel>()?.Construct(slotContainer);
             return instance;
         }
-
-        public GameObject CreateFlySaw(Vector2 at, Vector3 scale)
+        public async UniTask<GameObject> CreateCmvCamera()
         {
-            GameObject instantiate = _assetProvider.Instantiate(AssetsPath.FlySaw, at);
-            instantiate.transform.localScale = scale;
-            return instantiate;
+            var prefab =await _assetProvider.LoadAsync<GameObject>(_staticDataService.GetAssetsData().CMVcamReference);
+            return Object.Instantiate(prefab);
+            //return _assetProvider.Instantiate(AssetsPath.CMVcam);
         }
-
-        public GameObject CreateCmvCamera() =>
-            _assetProvider.Instantiate(AssetsPath.CMVcam);
     }
 }
