@@ -1,20 +1,24 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace CodeBase.Infrastructure.Logic
 {
     public class LoadCurtain
     {
-        private const string CurtainPath = "Infrastructure/LoadinCurtain";
+        private const string CurtainKey = "LoadinCurtain";
 
         private CanvasGroup _loadCurtain;
-
-        private readonly CanvasGroup _curtainLink;
+        private AsyncOperationHandle<GameObject> _curtainHandle;
+        private CanvasGroup _curtainPrefab;
         private bool _isCurtainEnable;
 
-        public LoadCurtain()
+        public async UniTask Init()
         {
-            _curtainLink = Resources.Load<GameObject>(CurtainPath).GetComponent<CanvasGroup>();
+            _curtainHandle = Addressables.LoadAssetAsync<GameObject>(CurtainKey);
+            GameObject prefab = await _curtainHandle.ToUniTask();
+            _curtainPrefab = prefab.GetComponent<CanvasGroup>();
         }
 
         public void Show()
@@ -23,7 +27,7 @@ namespace CodeBase.Infrastructure.Logic
                 return;
             _isCurtainEnable = true;
 
-            _loadCurtain = UnityEngine.Object.Instantiate(_curtainLink);
+            _loadCurtain = UnityEngine.Object.Instantiate(_curtainPrefab);
         }
 
         public void Hide()
@@ -41,6 +45,7 @@ namespace CodeBase.Infrastructure.Logic
                 float delta = Mathf.Min(Time.deltaTime, 0.05f);
                 _loadCurtain.alpha -= Constants.WindowAnimationSpeed * delta;
                 await UniTask.Yield(PlayerLoopTiming.Update);
+
             } while (_loadCurtain.alpha > 0.0f);
 
             UnityEngine.Object.Destroy(_loadCurtain.gameObject);

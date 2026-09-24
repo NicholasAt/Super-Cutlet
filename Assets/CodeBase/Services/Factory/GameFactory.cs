@@ -8,7 +8,9 @@ using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.ReloadScene;
 using CodeBase.Services.StaticData;
 using CodeBase.StaticData.Audio;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CodeBase.Services.Factory
 {
@@ -29,12 +31,15 @@ namespace CodeBase.Services.Factory
             _persistentProgressService = persistentProgressService;
         }
 
-        public void CreateFx(Vector2 at) => 
+        public void CreateFx(Vector2 at) =>
             _assetProvider.Instantiate(AssetsPath.Fx, at);
 
-        public GameObject CreatePlayer(Vector2 at)
+        public async UniTask<GameObject> CreatePlayer(Vector2 at)
         {
-            GameObject instantiate = _assetProvider.Instantiate(AssetsPath.Player, at);
+            AssetReferenceGameObject reference = _staticDataService.PlayerData().PlayerReference;
+            GameObject prefab = await _assetProvider.LoadAsync<GameObject>(reference);
+
+            GameObject instantiate = Object.Instantiate(prefab, at, Quaternion.identity);
 
             instantiate.GetComponent<MoveStateMachine>()?.Construct(_inputService, _staticDataService);
             instantiate.GetComponent<PlayerDie>()?.Construct(_reloadScene, _staticDataService);
@@ -52,7 +57,7 @@ namespace CodeBase.Services.Factory
 
         public GameObject CreatePlayerInLevelMap(MapLevelSlotContainer slotContainer, Vector2 at)
         {
-            var instance = _assetProvider.Instantiate(AssetsPath.MapLevelPlayer, at);
+            GameObject instance = _assetProvider.Instantiate(AssetsPath.MapLevelPlayer, at);
             instance.GetComponent<PlayerMoveInMapLevel>()?.Construct(slotContainer);
             return instance;
         }

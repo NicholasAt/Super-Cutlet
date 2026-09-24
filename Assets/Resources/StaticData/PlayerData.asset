@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1150c4889c229304eb67aa1c35c9752a, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
+  <PlayerReference>k__BackingField:
+    m_AssetGUID: 7ff3366313b4124428aa76fcc12c2b05
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_SubObjectGUID: 
+    m_EditorAssetChanged: 0
   <GroundMoveConfig>k__BackingField:
     <SpeedMove>k__BackingField: 12
     <JumpForce>k__BackingField: 18

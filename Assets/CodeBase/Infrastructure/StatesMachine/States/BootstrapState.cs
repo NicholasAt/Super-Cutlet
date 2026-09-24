@@ -1,3 +1,4 @@
+using Assets.Scripts.Services.AssetProvider;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Logic;
 using CodeBase.Services;
@@ -44,7 +45,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         {
             RegisterStaticData();
             _services.RegisterSingle<IInputService>(new InputService());
-            _services.RegisterSingle<IAssetProvider>(new AssetProvider());
+            _services.RegisterSingle<IAssetProvider>(new AddressablesLoader());
             _services.RegisterSingle<IGameStateMachine>(_stateMachine);
             _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentProgressService>()));

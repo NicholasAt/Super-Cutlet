@@ -1,4 +1,5 @@
 ﻿using CodeBase.Data;
+using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Logic;
 using CodeBase.Services.Factory;
 using CodeBase.Services.PersistentProgress;
@@ -19,17 +20,19 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         private readonly IWindowService _windowService;
         private readonly IPersistentProgressService _persistentProgressService;
         private readonly ISaveLoadService _saveLoadService;
+        private readonly IAssetProvider _assetProvider;
         private readonly LoadCurtain _loadCurtain;
         private readonly SceneLoader _sceneLoader;
         private readonly IGameStateMachine _gameStateMachine;
         private bool _inProcess;
-        public LoadMainMenuState(LoadCurtain loadCurtain, SceneLoader sceneLoader, IGameStateMachine gameStateMachine, IUIFactory uiFactory, IGameFactory gameFactory, IWindowService windowService, IPersistentProgressService persistentProgressService, ISaveLoadService saveLoadService)
+        public LoadMainMenuState(LoadCurtain loadCurtain, SceneLoader sceneLoader, IGameStateMachine gameStateMachine, IUIFactory uiFactory, IGameFactory gameFactory, IWindowService windowService, IPersistentProgressService persistentProgressService, ISaveLoadService saveLoadService,IAssetProvider assetProvider)
         {
             _uiFactory = uiFactory;
             _gameFactory = gameFactory;
             _windowService = windowService;
             _persistentProgressService = persistentProgressService;
             _saveLoadService = saveLoadService;
+            _assetProvider = assetProvider;
             _loadCurtain = loadCurtain;
             _sceneLoader = sceneLoader;
             _gameStateMachine = gameStateMachine;
@@ -75,6 +78,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         private void Clean()
         {
             _persistentProgressService.Settings?.UnSubscriber();
+            _assetProvider.ReleaseAll();
         }
     }
 }

@@ -2,7 +2,6 @@
 {
     public static class AssetsPath
     {
-        public const string Player = "Player/Player";
         public const string MapLevelPlayer = "Player/MapLevelPlayer";
         public const string CMVcam = "Player/Camera/CM vcam1";
         public const string AudioPlayer = "Audio/AudioPlayer";

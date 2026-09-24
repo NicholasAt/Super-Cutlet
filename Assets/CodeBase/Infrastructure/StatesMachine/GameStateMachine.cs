@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Logic;
 using CodeBase.Infrastructure.StatesMachine.States;
 using CodeBase.Services;
@@ -9,6 +8,8 @@ using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 using CodeBase.UI.Services.Factory;
 using CodeBase.UI.Services.Window;
+using System;
+using System.Collections.Generic;
 
 namespace CodeBase.Infrastructure.StatesMachine
 {
@@ -30,7 +31,8 @@ namespace CodeBase.Infrastructure.StatesMachine
                     services.Single<IGameFactory>(),
                     services.Single<IWindowService>(),
                     services.Single<IPersistentProgressService>(),
-                    services.Single<ISaveLoadService>()),
+                    services.Single<ISaveLoadService>(),
+                    services.Single<IAssetProvider>()),
 
                 [typeof(LoadProgressState)] = new LoadProgressState(
                     services.Single<IPersistentProgressService>(),
@@ -50,19 +52,20 @@ namespace CodeBase.Infrastructure.StatesMachine
                     services.Single<IInputService>(),
                     services.Single<ISaveLoadService>(),
                     services.Single<IPersistentProgressService>(),
-                    services.Single<IWindowService>()),
+                    services.Single<IWindowService>(),
+                    services.Single<IAssetProvider>()),
             };
         }
 
         public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadState<TPayload>
         {
-            var state = ChangeState<TState>();
+            TState state = ChangeState<TState>();
             state.Enter(payload);
         }
 
         public void Enter<TState>() where TState : class, IState
         {
-            var state = ChangeState<TState>();
+            TState state = ChangeState<TState>();
             state.Enter();
         }
 

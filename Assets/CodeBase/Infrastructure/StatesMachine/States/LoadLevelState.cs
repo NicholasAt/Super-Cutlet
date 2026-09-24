@@ -1,3 +1,4 @@
+using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Logic;
 using CodeBase.Logic;
 using CodeBase.Services.Factory;
@@ -26,10 +27,11 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         private readonly ISaveLoadService _saveLoadService;
         private readonly IPersistentProgressService _persistentProgressService;
         private readonly IWindowService _windowService;
-
+        private readonly IAssetProvider _assetProvider;
         private SceneComponentContainer _componentContainer;
         private bool _inProcess;
-        public LoadLevelState(IGameStateMachine stateMachine, SceneLoader sceneLoader, LoadCurtain loadingCurtain, IGameFactory gameFactory, IUIFactory uiFactory, IInputService inputService, ISaveLoadService saveLoadService, IPersistentProgressService persistentProgressService, IWindowService windowService)
+
+        public LoadLevelState(IGameStateMachine stateMachine, SceneLoader sceneLoader, LoadCurtain loadingCurtain, IGameFactory gameFactory, IUIFactory uiFactory, IInputService inputService, ISaveLoadService saveLoadService, IPersistentProgressService persistentProgressService, IWindowService windowService,IAssetProvider assetProvider)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
@@ -40,6 +42,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
             _saveLoadService = saveLoadService;
             _persistentProgressService = persistentProgressService;
             _windowService = windowService;
+            _assetProvider = assetProvider;
         }
 
         public void Enter(string sceneName)
@@ -63,13 +66,10 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         {
             _uiFactory.CreateUIRoot();
             FindComponentContainer();
-
-            InitWorld();
-
-            _stateMachine.Enter<LoopState>();
+            InitWorld().Forget();
         }
 
-        private void InitWorld()
+        private async UniTask InitWorld()
         {
             _uiFactory.CreateInput();
             _windowService.Open(WindowId.LoadMainMenuStateButton);
@@ -78,8 +78,10 @@ namespace CodeBase.Infrastructure.StatesMachine.States
             InitFinish();
             InitComponentsInScene();
             InitUpdateTimerText();
-            GameObject player = _gameFactory.CreatePlayer(GameObject.FindGameObjectWithTag(PlayerInitialPointTag).transform.position);
+            GameObject player = await _gameFactory.CreatePlayer(GameObject.FindGameObjectWithTag(PlayerInitialPointTag).transform.position);
             InitCamera(player.transform);
+
+            _stateMachine.Enter<LoopState>();
         }
 
         private void InitComponentsInScene()
@@ -117,6 +119,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
             _uiFactory.Clean();
             _inputService.Unsubscribe();
             _persistentProgressService.Settings.UnSubscriber();
+            _assetProvider.ReleaseAll();
         }
     }
 }

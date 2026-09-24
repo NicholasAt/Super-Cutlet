@@ -1,14 +1,17 @@
 using CodeBase.Infrastructure.Logic;
 using CodeBase.Infrastructure.StatesMachine.States;
+using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure
 {
     public class Bootstrapper : MonoBehaviour
     {
-        private void Awake()
+        private async UniTaskVoid Awake()
         {
             Game game = new Game();
+            await game.Run();
             game.StateMachine.Enter<BootstrapState>();
 
             DontDestroyOnLoad(this);
