@@ -102,7 +102,7 @@ namespace CodeBase.Player.PlayerMove
 
         private float CalculateForceUp()
         {
-            float percentCurrentVelocity = Mathf.Clamp(_currentJumpForceTime, 0, _config.MaxTimeToMaxJumpForce) / _config.MaxTimeToMaxJumpForce;
+            float percentCurrentVelocity = Mathf.Clamp(_currentJumpForceTime, _config.MinTimeToMaxJumpForce, _config.MaxTimeToMaxJumpForce) / _config.MaxTimeToMaxJumpForce;
             return _config.JumpForceUp * percentCurrentVelocity;
         }
 

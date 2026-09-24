@@ -21,6 +21,7 @@ MonoBehaviour:
     <MaxVelocityDownSpeed>k__BackingField: -5
     <JumpForceUp>k__BackingField: 24
     <JumpForceSide>k__BackingField: 10
-    <MaxTimeToMaxJumpForce>k__BackingField: 0.3
+    <MaxTimeToMaxJumpForce>k__BackingField: 0.2
+    <MinTimeToMaxJumpForce>k__BackingField: 0.1
   <GravityScale>k__BackingField: 4
   <RestartTimeAfterPlayerDeath>k__BackingField: 0.4

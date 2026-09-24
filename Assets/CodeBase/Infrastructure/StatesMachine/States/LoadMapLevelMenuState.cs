@@ -77,7 +77,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
             _gameFactory.CreatePlayerInLevelMap(_componentContainer.SlotContainer, GameObject.FindGameObjectWithTag(PlayerInitialPointTag).transform.position);
 
         private void FindComponentContainer() =>
-            _componentContainer = Object.FindObjectOfType<MapLevelComponentContainer>();
+            _componentContainer = Object.FindAnyObjectByType<MapLevelComponentContainer>();
 
         private void Clean()
         {

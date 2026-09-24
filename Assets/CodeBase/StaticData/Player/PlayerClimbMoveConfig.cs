@@ -11,5 +11,6 @@ namespace CodeBase.StaticData.Player
         [field: SerializeField] public float JumpForceUp { get; private set; }
         [field: SerializeField] public float JumpForceSide { get; private set; }
         [field: SerializeField] public float MaxTimeToMaxJumpForce { get; private set; }
+        [field: SerializeField] public float MinTimeToMaxJumpForce { get; private set; } = 0.1f;
     }
 }

@@ -97,13 +97,13 @@ namespace CodeBase.Infrastructure.StatesMachine.States
             _uiFactory.CreateUpdateTimer(_componentContainer.Finish.GetComponent<TriggeredPlayer>(), _componentContainer.Finish.GetComponent<LevelTimer>());
 
         private void FindComponentContainer() =>
-            _componentContainer = Object.FindObjectOfType<SceneComponentContainer>();
+            _componentContainer = Object.FindAnyObjectByType<SceneComponentContainer>();
 
         private void InitCamera(Transform playerTransform)
         {
             GameObject camera = _gameFactory.CreateCmvCamera();
-            camera.GetComponent<CinemachineVirtualCamera>().Follow = playerTransform;
-            camera.GetComponent<CinemachineConfiner>().m_BoundingShape2D = _componentContainer.CameraConfinerCollider;
+            camera.GetComponent<CinemachineCamera>().Follow = playerTransform;
+            camera.GetComponent<CinemachineConfiner2D>().BoundingShape2D = _componentContainer.CameraConfinerCollider;
         }
 
         private void Clean()

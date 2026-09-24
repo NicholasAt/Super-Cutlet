@@ -14,7 +14,7 @@ namespace CodeBase.Logic
         public void CollectComponents()
         {
             SawSpawners.Clear();
-            SawSpawners = Object.FindObjectsOfType<SawSpawner>().ToList();
+            SawSpawners = FindObjectsByType<SawSpawner>(FindObjectsInactive.Include, FindObjectsSortMode.None).ToList();
         }
     }
 }

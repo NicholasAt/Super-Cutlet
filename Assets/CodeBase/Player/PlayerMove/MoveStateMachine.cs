@@ -45,8 +45,8 @@ namespace CodeBase.Player.PlayerMove
 
         private void InitStates(IInputService inputService, GroundChecker groundChecker, IStaticDataService dataService)
         {
-            var moveClimb = new MoveClimb(_climbSideChecker, _rigidbody, groundChecker, inputService, this, this, dataService, _playerAudio);
-            var moveGround = new MoveGround(_climbSideChecker, _rigidbody, groundChecker, inputService, this, dataService, _playerAudio);
+            MoveClimb moveClimb = new MoveClimb(_climbSideChecker, _rigidbody, groundChecker, inputService, this, this, dataService, _playerAudio);
+            MoveGround moveGround = new MoveGround(_climbSideChecker, _rigidbody, groundChecker, inputService, this, dataService, _playerAudio);
             moveClimb.OnClimbJumpTimeElapsed += moveGround.ClimbJumpTimeElapsed;
 
             _states = new Dictionary<Type, IBaseMoveState>
