@@ -12,8 +12,6 @@ namespace CodeBase.Infrastructure
             {
                 Instantiate(_bootstrapper);
             }
-
-            Destroy(gameObject);
         }
     }
 }

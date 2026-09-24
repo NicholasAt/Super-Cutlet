@@ -13,10 +13,17 @@ namespace CodeBase.UI.Windows.MapLevelMenu
         public void Construct(IGameStateMachine gameStateMachine)
         {
             _gameStateMachine = gameStateMachine;
+        }
+
+        private void Start()
+        {
             _startGameButton.onClick.AddListener(StartGame);
         }
 
-        private void StartGame() =>
+        private void StartGame()
+        {
+            _startGameButton.onClick.RemoveAllListeners();
             _gameStateMachine.Enter<LoadProgressState>();
+        }
     }
 }

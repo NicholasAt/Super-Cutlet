@@ -9,6 +9,7 @@ using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
 using CodeBase.UI.Services.Window;
+using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Infrastructure.StatesMachine.States
 {
@@ -33,7 +34,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
 
         public void Enter()
         {
-            _sceneLoader.Load(InitScene, EnterLoadMenu);
+            EnterLoadMenu();
         }
 
         public void Exit()

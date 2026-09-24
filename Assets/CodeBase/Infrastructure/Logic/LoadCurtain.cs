@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using CodeBase.Services.StaticData;
+using System.Collections;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Logic
@@ -25,7 +26,7 @@ namespace CodeBase.Infrastructure.Logic
                 return;
             _isCurtainEnable = true;
 
-            _loadCurtain = Object.Instantiate(_curtainLink);
+            _loadCurtain = UnityEngine.Object.Instantiate(_curtainLink);
         }
 
         public void Hide()
@@ -40,11 +41,12 @@ namespace CodeBase.Infrastructure.Logic
         {
             do
             {
-                _loadCurtain.alpha -= 0.04f;
+                float delta = Mathf.Min(Time.deltaTime, 0.05f);
+                _loadCurtain.alpha -= Constants.WindowAnimationSpeed * delta;
                 yield return null;
             } while (_loadCurtain.alpha > 0.0f);
 
-            Object.Destroy(_loadCurtain.gameObject);
+            UnityEngine.Object.Destroy(_loadCurtain.gameObject);
             _isCurtainEnable = false;
         }
     }

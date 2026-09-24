@@ -16,15 +16,20 @@ namespace CodeBase.Services.StaticData
 
         private Dictionary<AudioConfigId, AudioConfig> _audioConfigs;
         private Dictionary<WindowId, WindowConfig> _windowConfigs;
+        private WindowStaticData _windowsData;
         private PlayerStaticData _player;
 
         public void Load()
         {
-            _windowConfigs = Resources.Load<WindowStaticData>(WindowStaticDataPath).Configs.ToDictionary(x => x.WindowId, x => x);
+            _windowsData = Resources.Load<WindowStaticData>(WindowStaticDataPath);
+            _windowConfigs = _windowsData.Configs.ToDictionary(x => x.WindowId, x => x);
             _audioConfigs = Resources.Load<AudioStaticData>(AudioStaticDataPath).Configs.ToDictionary(x => x.ConfigId, x => x);
             _player = Resources.Load<PlayerStaticData>(PlayerStaticDataPath);
         }
-
+        public float GetWindowAnimationSpeed()
+        {
+            return _windowsData.CurtainSpeed;
+        }
         public PlayerStaticData PlayerData() =>
             _player;
 

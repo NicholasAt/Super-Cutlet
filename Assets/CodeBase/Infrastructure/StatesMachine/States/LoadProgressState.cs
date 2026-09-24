@@ -20,7 +20,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
 
         public void Enter()
         {
-            var progress = _saveLoad.LoadPlayerProgress();
+            Data.PlayerProgress progress = _saveLoad.LoadPlayerProgress();
             if (progress == null)
             {
                 _persistentProgressService.NewPlayerProgress();
@@ -29,7 +29,6 @@ namespace CodeBase.Infrastructure.StatesMachine.States
             else
             {
                 _persistentProgressService.SetPlayerProgress(progress);
-                //_gameStateMachine.Enter<LoadLevelState, string>(FirstLevelKey);
                 _gameStateMachine.Enter<LoadMapLevelMenuState>();
             }
         }

@@ -1,36 +1,30 @@
-﻿using System;
-using System.Collections;
+﻿using Cysharp.Threading.Tasks;
+using System;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
 namespace CodeBase.Infrastructure.Logic
 {
     public class SceneLoader
     {
-        private readonly ICoroutineRunner _coroutineRunner;
-
-        public SceneLoader(ICoroutineRunner coroutineRunner)
+        public async UniTask LoadSingle(string key, Action onLoaded)
         {
-            _coroutineRunner = coroutineRunner;
-        }
+            AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(key, LoadSceneMode.Single);
+            await handle.ToUniTask();
 
-        public void Load(string sceneName, Action onLoaded = null) =>
-            _coroutineRunner.StartCoroutine(LoadScene(sceneName, onLoaded));
-
-        private IEnumerator LoadScene(string name, Action onLoaded)
-        {
-            if (name == SceneManager.GetActiveScene().name)
+            if (handle.Status == AsyncOperationStatus.Succeeded)
             {
                 onLoaded?.Invoke();
-                yield break;
             }
-
-            var waitScene = SceneManager.LoadSceneAsync(name);
-            do
+            else
             {
-                yield return null;
-            } while (waitScene.isDone == false);
-
-            onLoaded?.Invoke();
+                Debug.LogError($"cant load");
+                if (handle.IsValid())
+                    Addressables.Release(handle);
+            }
         }
     }
 }

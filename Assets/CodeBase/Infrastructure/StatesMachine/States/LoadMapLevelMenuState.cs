@@ -5,6 +5,7 @@ using CodeBase.Services.PersistentProgress;
 using CodeBase.StaticData.Audio;
 using CodeBase.UI.Services.Factory;
 using CodeBase.UI.Services.Window;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.StatesMachine.States
@@ -23,6 +24,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         private readonly IWindowService _windowService;
 
         private MapLevelComponentContainer _componentContainer;
+        private bool _inProcess;
 
         public LoadMapLevelMenuState(SceneLoader sceneLoader, LoadCurtain loadCurtain, IGameStateMachine gameStateMachine, IGameFactory gameFactory, IUIFactory uiFactory, IPersistentProgressService persistentProgressService, IWindowService windowService)
         {
@@ -37,14 +39,19 @@ namespace CodeBase.Infrastructure.StatesMachine.States
 
         public void Enter()
         {
+            if (_inProcess)
+                return;
+            _inProcess = true;
+
             _loadCurtain.Show();
             Clean();
-            _sceneLoader.Load(MapLevelKey, OnLoaded);
+            _sceneLoader.LoadSingle(MapLevelKey, OnLoaded).Forget();
         }
 
         public void Exit()
         {
             _loadCurtain.Hide();
+            _inProcess = false;
         }
 
         private void OnLoaded()

@@ -7,6 +7,7 @@ using CodeBase.Services.SaveLoad;
 using CodeBase.StaticData.Audio;
 using CodeBase.UI.Services.Factory;
 using CodeBase.UI.Services.Window;
+using Cysharp.Threading.Tasks;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         private readonly IWindowService _windowService;
 
         private SceneComponentContainer _componentContainer;
-
+        private bool _inProcess;
         public LoadLevelState(IGameStateMachine stateMachine, SceneLoader sceneLoader, LoadCurtain loadingCurtain, IGameFactory gameFactory, IUIFactory uiFactory, IInputService inputService, ISaveLoadService saveLoadService, IPersistentProgressService persistentProgressService, IWindowService windowService)
         {
             _stateMachine = stateMachine;
@@ -43,13 +44,18 @@ namespace CodeBase.Infrastructure.StatesMachine.States
 
         public void Enter(string sceneName)
         {
+            if (_inProcess)
+                return;
+            _inProcess = true;
+
             _loadingCurtain.Show();
             Clean();
-            _sceneLoader.Load(sceneName, OnLoaded);
+            _sceneLoader.LoadSingle(sceneName, OnLoaded).Forget();
         }
 
         public void Exit()
         {
+            _inProcess = false;
             _loadingCurtain.Hide();
         }
 
