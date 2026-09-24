@@ -2,6 +2,8 @@
 {
     public interface IBaseMoveState
     {
+        void Init();
+        void Destroy();
         void Enter();
 
         void Exit();

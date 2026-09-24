@@ -1,5 +1,4 @@
-﻿using CodeBase.Services.StaticData;
-using System.Collections;
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Logic
@@ -11,12 +10,10 @@ namespace CodeBase.Infrastructure.Logic
         private CanvasGroup _loadCurtain;
 
         private readonly CanvasGroup _curtainLink;
-        private readonly ICoroutineRunner _coroutine;
         private bool _isCurtainEnable;
 
-        public LoadCurtain(ICoroutineRunner coroutine)
+        public LoadCurtain()
         {
-            _coroutine = coroutine;
             _curtainLink = Resources.Load<GameObject>(CurtainPath).GetComponent<CanvasGroup>();
         }
 
@@ -34,16 +31,16 @@ namespace CodeBase.Infrastructure.Logic
             if (_isCurtainEnable == false)
                 return;
 
-            _coroutine.StartCoroutine(HideCurtain());
+            HideCurtain().Forget();
         }
 
-        private IEnumerator HideCurtain()
+        private async UniTask HideCurtain()
         {
             do
             {
                 float delta = Mathf.Min(Time.deltaTime, 0.05f);
                 _loadCurtain.alpha -= Constants.WindowAnimationSpeed * delta;
-                yield return null;
+                await UniTask.Yield(PlayerLoopTiming.Update);
             } while (_loadCurtain.alpha > 0.0f);
 
             UnityEngine.Object.Destroy(_loadCurtain.gameObject);

@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace CodeBase.Infrastructure
 {
-    public class Bootstrapper : MonoBehaviour, ICoroutineRunner
+    public class Bootstrapper : MonoBehaviour
     {
         private void Awake()
         {
-            Game game = new Game(this);
+            Game game = new Game();
             game.StateMachine.Enter<BootstrapState>();
 
             DontDestroyOnLoad(this);

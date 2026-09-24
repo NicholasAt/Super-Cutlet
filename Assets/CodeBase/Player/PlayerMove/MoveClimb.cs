@@ -1,11 +1,11 @@
-﻿using CodeBase.Infrastructure.Logic;
+﻿using CodeBase.Player.ClimbSideChecker;
 using CodeBase.Services.Input;
 using CodeBase.Services.StaticData;
 using CodeBase.StaticData.Audio;
 using CodeBase.StaticData.Player;
+using Cysharp.Threading.Tasks;
 using System;
-using System.Collections;
-using CodeBase.Player.ClimbSideChecker;
+using System.Threading;
 using UnityEngine;
 
 namespace CodeBase.Player.PlayerMove
@@ -18,15 +18,14 @@ namespace CodeBase.Player.PlayerMove
         private readonly GroundChecker _groundChecker;
         private readonly IInputService _inputService;
         private readonly MoveStateMachine _moveStateMachine;
-        private readonly ICoroutineRunner _coroutineRunner;
         private readonly PlayerClimbMoveConfig _config;
-
+        private CancellationTokenSource _cts;
         public Action<bool> OnClimbJumpTimeElapsed;
 
         private float _currentJumpForceTime;
         private bool _isEntered;
 
-        public MoveClimb(ClimbSideChecker.ClimbSideChecker climbSideChecker, Rigidbody2D rigidbody, GroundChecker groundChecker, IInputService inputService, MoveStateMachine moveStateMachine, ICoroutineRunner coroutineRunner, IStaticDataService dataService, PlayerAudio playerAudio)
+        public MoveClimb(ClimbSideChecker.ClimbSideChecker climbSideChecker, Rigidbody2D rigidbody, GroundChecker groundChecker, IInputService inputService, MoveStateMachine moveStateMachine, IStaticDataService dataService, PlayerAudio playerAudio)
         {
             _playerAudio = playerAudio;
             _climbSideChecker = climbSideChecker;
@@ -34,8 +33,19 @@ namespace CodeBase.Player.PlayerMove
             _groundChecker = groundChecker;
             _inputService = inputService;
             _moveStateMachine = moveStateMachine;
-            _coroutineRunner = coroutineRunner;
             _config = dataService.PlayerData().ClimbMoveConfig;
+        }
+
+        public void Init()
+        {
+            _cts = new CancellationTokenSource();
+        }
+
+        public void Destroy()
+        {
+            _cts.Cancel();
+            _cts.Dispose();
+            Exit();
         }
 
         public void Enter()
@@ -43,7 +53,7 @@ namespace CodeBase.Player.PlayerMove
             ClearVelocity(true);
             _inputService.OnJump += Jump;
             _isEntered = true;
-            _coroutineRunner.StartCoroutine(JumpForceTimer());
+            JumpForceTimer(_cts.Token).Forget();
         }
 
         public void Exit()
@@ -77,28 +87,52 @@ namespace CodeBase.Player.PlayerMove
             _rigidbody.AddForce(Vector2.right * GetClimbSide(), ForceMode2D.Impulse);
 
             OnClimbJumpTimeElapsed?.Invoke(false);
-            _coroutineRunner.StartCoroutine(ClimbJumpTimer());
+            ClimbJumpTimer(_cts.Token).Forget();
         }
 
-        private IEnumerator ClimbJumpTimer()
+        private async UniTask ClimbJumpTimer(CancellationToken ct)
         {
-            yield return new WaitForSeconds(_config.ClimbJumpTimerDelay);
-            OnClimbJumpTimeElapsed?.Invoke(true);
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(_config.ClimbJumpTimerDelay), cancellationToken: ct);
+                OnClimbJumpTimeElapsed?.Invoke(true);
+            }
+            catch (OperationCanceledException)
+            {
+                //ignore
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                throw;
+            }
+        }
+        private async UniTaskVoid JumpForceTimer(CancellationToken ct)
+        {
+            try
+            {
+                while (_isEntered)
+                {
+                    ct.ThrowIfCancellationRequested();
+                    _currentJumpForceTime += Time.deltaTime;
+                    await UniTask.Yield(PlayerLoopTiming.Update, ct);
+                }
+                _currentJumpForceTime = 0;
+
+            }
+            catch (OperationCanceledException)
+            {
+                //ignore
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                throw;
+            }
         }
 
         private float LimitedVelocityY() =>
             (_rigidbody.linearVelocity.y < _config.MaxVelocityDownSpeed) ? _config.MaxVelocityDownSpeed : _rigidbody.linearVelocity.y;
-
-        private IEnumerator JumpForceTimer()
-        {
-            while (_isEntered)
-            {
-                _currentJumpForceTime += Time.deltaTime;
-                yield return null;
-            }
-
-            _currentJumpForceTime = 0;
-        }
 
         private float CalculateForceUp()
         {

@@ -1,5 +1,4 @@
-﻿using CodeBase.Infrastructure.Logic;
-using CodeBase.Services.Input;
+﻿using CodeBase.Services.Input;
 using CodeBase.Services.StaticData;
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,7 @@ using UnityEngine;
 namespace CodeBase.Player.PlayerMove
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class MoveStateMachine : MonoBehaviour, ICoroutineRunner
+    public class MoveStateMachine : MonoBehaviour
     {
         [SerializeField] private ClimbSideChecker.ClimbSideChecker _climbSideChecker;
         [SerializeField] private PlayerAudio _playerAudio;
@@ -36,6 +35,11 @@ namespace CodeBase.Player.PlayerMove
         private void FixedUpdate() =>
             _activeState.FixedUpdate();
 
+        private void OnDestroy()
+        {
+            foreach (IBaseMoveState state in _states.Values)
+                state.Destroy();
+        }
         public void Enter<TState>() where TState : class, IBaseMoveState
         {
             _activeState?.Exit();
@@ -45,7 +49,7 @@ namespace CodeBase.Player.PlayerMove
 
         private void InitStates(IInputService inputService, GroundChecker groundChecker, IStaticDataService dataService)
         {
-            MoveClimb moveClimb = new MoveClimb(_climbSideChecker, _rigidbody, groundChecker, inputService, this, this, dataService, _playerAudio);
+            MoveClimb moveClimb = new MoveClimb(_climbSideChecker, _rigidbody, groundChecker, inputService, this, dataService, _playerAudio);
             MoveGround moveGround = new MoveGround(_climbSideChecker, _rigidbody, groundChecker, inputService, this, dataService, _playerAudio);
             moveClimb.OnClimbJumpTimeElapsed += moveGround.ClimbJumpTimeElapsed;
 
@@ -54,6 +58,9 @@ namespace CodeBase.Player.PlayerMove
                 [typeof(MoveGround)] = moveGround,
                 [typeof(MoveClimb)] = moveClimb,
             };
+
+            foreach (IBaseMoveState state in _states.Values)
+                state.Init();
         }
 
         private void SetRigidbodySettings()

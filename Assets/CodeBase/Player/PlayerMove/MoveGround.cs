@@ -29,7 +29,12 @@ namespace CodeBase.Player.PlayerMove
             _playerAudio = playerAudio;
             _config = dataService.PlayerData().GroundMoveConfig;
         }
-
+        public void Init()
+        { }
+        public void Destroy()
+        {
+            Exit();
+        }
         public void Enter()
         {
             _input.OnJump += Jump;
