@@ -31,7 +31,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         private SceneComponentContainer _componentContainer;
         private bool _inProcess;
 
-        public LoadLevelState(IGameStateMachine stateMachine, SceneLoader sceneLoader, LoadCurtain loadingCurtain, IGameFactory gameFactory, IUIFactory uiFactory, IInputService inputService, ISaveLoadService saveLoadService, IPersistentProgressService persistentProgressService, IWindowService windowService,IAssetProvider assetProvider)
+        public LoadLevelState(IGameStateMachine stateMachine, SceneLoader sceneLoader, LoadCurtain loadingCurtain, IGameFactory gameFactory, IUIFactory uiFactory, IInputService inputService, ISaveLoadService saveLoadService, IPersistentProgressService persistentProgressService, IWindowService windowService, IAssetProvider assetProvider)
         {
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
@@ -64,15 +64,15 @@ namespace CodeBase.Infrastructure.StatesMachine.States
 
         private void OnLoaded()
         {
-            _uiFactory.CreateUIRoot();
             FindComponentContainer();
             InitWorld().Forget();
         }
 
         private async UniTask InitWorld()
         {
-            _uiFactory.CreateInput();
-            _windowService.Open(WindowId.LoadMainMenuStateButton);
+            await _uiFactory.CreateUIRoot();
+            await _uiFactory.CreateInput();
+            await _windowService.Open(WindowId.LoadMainMenuStateButton);
             _gameFactory.CreateAudioPlayer(AudioConfigId.Levels);
 
             InitFinish();

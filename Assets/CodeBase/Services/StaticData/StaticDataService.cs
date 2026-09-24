@@ -5,6 +5,7 @@ using CodeBase.UI.Services.Window;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace CodeBase.Services.StaticData
 {
@@ -26,10 +27,7 @@ namespace CodeBase.Services.StaticData
             _audioConfigs = Resources.Load<AudioStaticData>(AudioStaticDataPath).Configs.ToDictionary(x => x.ConfigId, x => x);
             _player = Resources.Load<PlayerStaticData>(PlayerStaticDataPath);
         }
-        public float GetWindowAnimationSpeed()
-        {
-            return _windowsData.CurtainSpeed;
-        }
+       
         public PlayerStaticData PlayerData() =>
             _player;
 
@@ -38,5 +36,8 @@ namespace CodeBase.Services.StaticData
 
         public WindowConfig ForWindow(WindowId id) =>
             _windowConfigs.TryGetValue(id, out var data) ? data : null;
+
+        public AssetReferenceGameObject UIRootReference() =>
+            _windowsData.UIRootReference;
     }
 }

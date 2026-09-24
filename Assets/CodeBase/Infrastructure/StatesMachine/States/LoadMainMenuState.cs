@@ -25,7 +25,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         private readonly SceneLoader _sceneLoader;
         private readonly IGameStateMachine _gameStateMachine;
         private bool _inProcess;
-        public LoadMainMenuState(LoadCurtain loadCurtain, SceneLoader sceneLoader, IGameStateMachine gameStateMachine, IUIFactory uiFactory, IGameFactory gameFactory, IWindowService windowService, IPersistentProgressService persistentProgressService, ISaveLoadService saveLoadService,IAssetProvider assetProvider)
+        public LoadMainMenuState(LoadCurtain loadCurtain, SceneLoader sceneLoader, IGameStateMachine gameStateMachine, IUIFactory uiFactory, IGameFactory gameFactory, IWindowService windowService, IPersistentProgressService persistentProgressService, ISaveLoadService saveLoadService, IAssetProvider assetProvider)
         {
             _uiFactory = uiFactory;
             _gameFactory = gameFactory;
@@ -46,7 +46,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
 
             _loadCurtain.Show();
             Clean();
-            _sceneLoader.LoadSingle(MainScene, OnLoaded).Forget();
+            _sceneLoader.LoadSingle(MainScene, () => OnLoaded().Forget()).Forget();
         }
 
         public void Exit()
@@ -55,12 +55,12 @@ namespace CodeBase.Infrastructure.StatesMachine.States
             _loadCurtain.Hide();
         }
 
-        private void OnLoaded()
+        private async UniTask OnLoaded()
         {
             LoadSettingsOrInitNew();
 
-            _uiFactory.CreateUIRoot();
-            _windowService.Open(WindowId.MainMenu);
+            await _uiFactory.CreateUIRoot();
+          await  _windowService.Open(WindowId.MainMenu);
             _gameFactory.CreateAudioPlayer(AudioConfigId.MainMenu);
             _gameStateMachine.Enter<LoopState>();
         }

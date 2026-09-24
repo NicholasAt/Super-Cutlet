@@ -1,5 +1,6 @@
 ﻿using CodeBase.UI.Services.Factory;
 using CodeBase.UI.Windows;
+using Cysharp.Threading.Tasks;
 using System;
 
 namespace CodeBase.UI.Services.Window
@@ -14,35 +15,27 @@ namespace CodeBase.UI.Services.Window
             _uiFactory.OnWindowClose += RemoveInContainer;
         }
 
-        public void Open(WindowId id)
+        public async UniTask Open(WindowId id)
         {
             switch (id)
             {
                 case WindowId.None:
-                    break;
-
                 case WindowId.TransferLevelButton:
-                    break;
-
                 case WindowId.LevelTimer:
-                    break;
-
                 case WindowId.MapLevelInfoLevelText:
-                    break;
-
                 case WindowId.Input:
                     break;
 
                 case WindowId.MainMenu:
-                    _uiFactory.CreateMainMenu(this);
+                    await _uiFactory.CreateMainMenu(this);
                     break;
 
                 case WindowId.Settings:
-                    _uiFactory.CreateSettings(this);
+                    await _uiFactory.CreateSettings(this);
                     break;
 
                 case WindowId.LoadMainMenuStateButton:
-                    _uiFactory.CreateLoadMainMenuStateButton();
+                    await _uiFactory.CreateLoadMainMenuStateButton();
                     break;
 
                 default:
@@ -58,7 +51,7 @@ namespace CodeBase.UI.Services.Window
 
         public bool GetWindow<TWindow>(WindowId id, out TWindow window) where TWindow : BaseWindow
         {
-            window = _uiFactory.WindowsContainer.TryGetValue(id, out var valueWindow) ? (TWindow)valueWindow : null;
+            window = _uiFactory.WindowsContainer.TryGetValue(id, out BaseWindow valueWindow) ? (TWindow)valueWindow : null;
             return window;
         }
 

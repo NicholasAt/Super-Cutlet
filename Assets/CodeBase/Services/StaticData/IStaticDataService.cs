@@ -2,15 +2,16 @@
 using CodeBase.StaticData.Player;
 using CodeBase.StaticData.Windows;
 using CodeBase.UI.Services.Window;
+using UnityEngine.AddressableAssets;
 
 namespace CodeBase.Services.StaticData
 {
     public interface IStaticDataService : IService
     {
         void Load();
-
         WindowConfig ForWindow(WindowId id);
         AudioConfig ForAudio(AudioConfigId configId);
         PlayerStaticData PlayerData();
+        AssetReferenceGameObject UIRootReference();
     }
 }

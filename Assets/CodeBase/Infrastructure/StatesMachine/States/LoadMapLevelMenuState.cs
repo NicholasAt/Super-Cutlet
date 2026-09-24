@@ -56,18 +56,21 @@ namespace CodeBase.Infrastructure.StatesMachine.States
 
         private void OnLoaded()
         {
-            _uiFactory.CreateUIRoot();
             FindComponentContainer();
+            InitWorld().Forget();
+        }
+        private async UniTask InitWorld()
+        {
+            await _uiFactory.CreateUIRoot();
             _gameFactory.CreateAudioPlayer(AudioConfigId.MapLevel);
             InitSlotContainer();
             InitInfoLevelText();
             InitTransferLevelButton();
             InitPlayer();
-            _windowService.Open(WindowId.LoadMainMenuStateButton);
+          await  _windowService.Open(WindowId.LoadMainMenuStateButton);
 
             _gameStateMachine.Enter<LoopState>();
         }
-
         private void InitSlotContainer()
         {
             _componentContainer.SlotContainer.Construct(_persistentProgressService);
