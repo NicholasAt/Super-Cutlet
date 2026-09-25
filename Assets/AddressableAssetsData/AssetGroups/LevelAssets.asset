@@ -10,53 +10,48 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: levels
+  m_Name: LevelAssets
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
-  m_GroupName: levels
-  m_GUID: f25c49f5b849cab408682434c07b07b5
+  m_GroupName: LevelAssets
+  m_GUID: 0066f03c11032b746887603828d8b367
   m_SerializeEntries:
-  - m_GUID: 286d6ecb73c39ad4a9130d0f798afa49
-    m_Address: Level 2
+  - m_GUID: 136f0d23bb3f3914b9dccf596bd7dc3b
+    m_Address: MapLevelPlayer
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 649decf0714442746ace3a6807449e80
-    m_Address: Level 1
+  - m_GUID: 2e498d1c8094910479dc3e1b768306a4
+    m_Address: LiberationSans SDF - Fallback
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 762d9a0610dc3a849bac89e0d6a171ad
-    m_Address: Level 7
+  - m_GUID: 431f6c133efd11a48a50c256646a5165
+    m_Address: AudioPlayer
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 80d73c05b13366f4ea886d97143b6d70
-    m_Address: Level 3
+  - m_GUID: 7ff3366313b4124428aa76fcc12c2b05
+    m_Address: Player
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a5222118a9d676940885f8da06dba222
-    m_Address: Level 9
+  - m_GUID: 8f586378b4e144a9851e7b34d9b748ee
+    m_Address: LiberationSans SDF
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ac40dfa1b1e83b048846c23eefda9e7b
-    m_Address: Level 8
+  - m_GUID: a7fcc1d881de65e44a9b79ed3276dc37
+    m_Address: Fx
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ad658d57206b5734e932b492ac50c34e
-    m_Address: Level 4
+  - m_GUID: e6251a459a8259e48a4ee35f504bc519
+    m_Address: CM vcam1
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bb68872d43f3ca747b1d11562b5bf027
-    m_Address: Level 6
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: f71a2017240a8144c86e0a95b7c81eac
-    m_Address: Level 5
+  - m_GUID: e6aa0d9c2201d1341b368182504a7fa3
+    m_Address: FlyingSaw
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -64,5 +59,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 6c5e40c7aea4649408d41dd05693f445, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: f23c99691f0a1984e875e428b37eac93, type: 2}
-    - {fileID: 11400000, guid: f9618860a441bad4aa7ffff9e583d0c6, type: 2}
+    - {fileID: 11400000, guid: 7136a5bc61a9fd14a84be1b1f0ad2c6f, type: 2}
+    - {fileID: 11400000, guid: 8b05f39e28ae8ff4da8205e931e3bcdb, type: 2}

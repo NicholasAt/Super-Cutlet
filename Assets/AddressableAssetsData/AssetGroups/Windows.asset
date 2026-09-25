@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Windows
   m_GUID: 97b751891ab112e4fa5d3776262e2b24
   m_SerializeEntries:
+  - m_GUID: 21beb0d9dc93eb444b4061265bdb7533
+    m_Address: InitCurtain
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 31f1dabd1734f39439ed38b1b878ba19
     m_Address: UIRoot
     m_ReadOnly: 0
