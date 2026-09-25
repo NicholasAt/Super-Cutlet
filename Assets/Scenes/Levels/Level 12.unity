@@ -197,10 +197,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 27, y: 30}
-      - {x: -8, y: 30}
-      - {x: -8, y: -10}
-      - {x: 27, y: -10}
+    - - {x: 30, y: 30}
+      - {x: -12.885452, y: 29.72083}
+      - {x: -12.88545, y: -9.860415}
+      - {x: 30, y: -10}
   m_UseDelaunayMesh: 1
 --- !u!1 &218670447
 GameObject:
