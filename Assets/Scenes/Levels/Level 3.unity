@@ -197,10 +197,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 36, y: 18}
+    - - {x: 40, y: 18}
       - {x: -15, y: 18}
       - {x: -15, y: -10}
-      - {x: 36, y: -10}
+      - {x: 40, y: -10}
   m_UseDelaunayMesh: 1
 --- !u!1001 &106505351
 PrefabInstance:

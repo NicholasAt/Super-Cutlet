@@ -12,7 +12,7 @@ using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
 using CodeBase.UI.Services.Window;
-using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace CodeBase.Infrastructure.StatesMachine.States
 {
@@ -61,12 +61,13 @@ namespace CodeBase.Infrastructure.StatesMachine.States
 
         private void EnterLoadMenu()
         {
+            Application.targetFrameRate = Constants.FrameRate;
             _stateMachine.Enter<LoadMainMenuState>();
         }
 
         private void RegisterStaticData()
         {
-            var service = new StaticDataService();
+            StaticDataService service = new StaticDataService();
             service.Load();
             _services.RegisterSingle<IStaticDataService>(service);
         }

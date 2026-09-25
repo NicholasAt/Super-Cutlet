@@ -748,10 +748,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 20, y: 26}
-      - {x: -20, y: 26}
-      - {x: -20, y: -6}
-      - {x: 20, y: -6}
+    - - {x: 28, y: 26}
+      - {x: -28, y: 26}
+      - {x: -28, y: -6}
+      - {x: 28, y: -5.4116735}
   m_UseDelaunayMesh: 1
 --- !u!4 &1184233719
 Transform:
