@@ -71,7 +71,8 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         private async UniTask InitWorld()
         {
             await _uiFactory.CreateUIRoot();
-            await _uiFactory.CreateInput();
+            if (Application.isMobilePlatform)
+                await _uiFactory.CreateInput();
             await _windowService.Open(WindowId.LoadMainMenuStateButton);
             _gameFactory.CreateAudioPlayer(AudioConfigId.Levels).Forget();
 
