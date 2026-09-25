@@ -6,21 +6,27 @@ namespace CodeBase.Data
     [Serializable]
     public class Settings
     {
-        [field: SerializeField] public float AudioVolume { get; private set; }
-        public Action OnChangeAudioVolume;
+        [field: SerializeField] public float MusicVolume { get; private set; } = 1;
+        [field: SerializeField] public float SFXVolume { get; private set; } = 1;
 
-        public Settings(float audioVolume)
+        public Action OnMusicChange { get; set; }
+        public Action OnSFXChange { get; set; }
+
+        public void SetSFXVolume(float value)
         {
-            AudioVolume = audioVolume;
+            SFXVolume = value;
+            OnSFXChange?.Invoke();
+        }
+        public void SetMusicVolume(float value)
+        {
+            MusicVolume = value;
+            OnMusicChange?.Invoke();
         }
 
-        public void SetAudioVolume(float value)
+        public void UnSubscriber()
         {
-            AudioVolume = value;
-            OnChangeAudioVolume?.Invoke();
+            OnSFXChange = null;
+            OnMusicChange = null;
         }
-
-        public void UnSubscriber() =>
-            OnChangeAudioVolume = null;
     }
 }

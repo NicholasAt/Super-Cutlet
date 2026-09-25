@@ -8,7 +8,7 @@ namespace CodeBase.Services.PersistentProgress
         Settings Settings { get; }
         PlayerProgress NewPlayerProgress();
         void SetPlayerProgress(PlayerProgress progress);
-        Settings NewSettings(float audioVolume);
+        Settings NewSettings();
         void SetSettings(Settings settings);
     }
 }

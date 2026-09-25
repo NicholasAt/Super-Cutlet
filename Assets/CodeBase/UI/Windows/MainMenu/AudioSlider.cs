@@ -1,4 +1,5 @@
-﻿using CodeBase.Services.PersistentProgress;
+﻿using CodeBase.Data;
+using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,8 @@ namespace CodeBase.UI.Windows.MainMenu
     public class AudioSlider : MonoBehaviour
     {
         [SerializeField] private Slider _audioSlider;
+        [SerializeField] private bool _isSFX;
+
         private ISaveLoadService _save;
         private IPersistentProgressService _persistentProgressService;
 
@@ -15,14 +18,27 @@ namespace CodeBase.UI.Windows.MainMenu
         {
             _save = saveLoadService;
             _persistentProgressService = persistentProgressService;
-            _audioSlider.value = _persistentProgressService.Settings.AudioVolume;
+
+        }
+        private void Start()
+        {
+            Settings settings = GetSettings();
+            _audioSlider.value = _isSFX ? settings.SFXVolume : settings.MusicVolume;
             _audioSlider.onValueChanged.AddListener(ChangeVolume);
         }
 
         private void ChangeVolume(float value)
         {
-            _persistentProgressService.Settings.SetAudioVolume(value);
+            Settings settings = GetSettings();
+            if (_isSFX)
+                settings.SetSFXVolume(value);
+            else
+                settings.SetMusicVolume(value);
             _save.SaveSettings();
+        }
+        private Settings GetSettings()
+        {
+            return _persistentProgressService.Settings;
         }
     }
 }

@@ -25,6 +25,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         private readonly SceneLoader _sceneLoader;
         private readonly IGameStateMachine _gameStateMachine;
         private bool _inProcess;
+
         public LoadMainMenuState(LoadCurtain loadCurtain, SceneLoader sceneLoader, IGameStateMachine gameStateMachine, IUIFactory uiFactory, IGameFactory gameFactory, IWindowService windowService, IPersistentProgressService persistentProgressService, ISaveLoadService saveLoadService, IAssetProvider assetProvider)
         {
             _uiFactory = uiFactory;
@@ -70,7 +71,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
             Settings settings = _saveLoadService.LoadSettings();
 
             if (settings == null)
-                _persistentProgressService.NewSettings(1f);
+                _persistentProgressService.NewSettings();
             else
                 _persistentProgressService.SetSettings(settings);
         }

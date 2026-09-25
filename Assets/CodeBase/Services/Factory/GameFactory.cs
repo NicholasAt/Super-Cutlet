@@ -10,7 +10,6 @@ using CodeBase.Services.StaticData;
 using CodeBase.StaticData.Audio;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -52,14 +51,15 @@ namespace CodeBase.Services.Factory
             instantiate.GetComponent<MoveStateMachine>()?.Construct(_inputService, _staticDataService);
             instantiate.GetComponent<PlayerDie>()?.Construct(_reloadScene, _staticDataService);
             instantiate.GetComponent<PlayerAudio>()?.Construct(_staticDataService, _persistentProgressService);
-
+            InitAudio(instantiate);
             return instantiate;
         }
 
         public async UniTask CreateFX(Vector2 at, CancellationToken ct)
         {
             GameObject prefab = await _assetProvider.LoadAsync<GameObject>(_staticDataService.GetAssetsData().FxReference, ct);
-            Object.Instantiate(prefab, at, Quaternion.identity);
+            GameObject instance = Object.Instantiate(prefab, at, Quaternion.identity);
+            InitAudio(instance);
         }
 
         public async UniTask CreateAudioPlayer(AudioConfigId id)
@@ -67,6 +67,7 @@ namespace CodeBase.Services.Factory
             GameObject prefab = await _assetProvider.LoadAsync<GameObject>(_staticDataService.GetAssetsData().AudioPlayerReference);
             AudioPlayer audioPlayer = Object.Instantiate(prefab).GetComponent<AudioPlayer>();
             audioPlayer.Construct(_staticDataService, _persistentProgressService);
+            InitAudio(audioPlayer.gameObject);
             audioPlayer.Play(id);
         }
         public async UniTask<GameObject> CreatePlayerInLevelMap(MapLevelSlotContainer slotContainer, Vector2 at)
@@ -78,9 +79,14 @@ namespace CodeBase.Services.Factory
         }
         public async UniTask<GameObject> CreateCmvCamera()
         {
-            var prefab =await _assetProvider.LoadAsync<GameObject>(_staticDataService.GetAssetsData().CMVcamReference);
+            GameObject prefab = await _assetProvider.LoadAsync<GameObject>(_staticDataService.GetAssetsData().CMVcamReference);
             return Object.Instantiate(prefab);
             //return _assetProvider.Instantiate(AssetsPath.CMVcam);
+        }
+        private void InitAudio(GameObject gameObject)
+        {
+            if (gameObject.TryGetComponent(out ApplyAudioSettings applyAudio))
+                applyAudio.Construct(_persistentProgressService);
         }
     }
 }

@@ -11,8 +11,8 @@ namespace CodeBase.Services.PersistentProgress
         public void SetPlayerProgress(PlayerProgress progress) =>
                 Progress = progress;
 
-        public Settings NewSettings(float audioVolume) => 
-            Settings = new Settings(audioVolume);
+        public Settings NewSettings() => 
+            Settings = new Settings();
 
         public void SetSettings(Settings settings) =>
             Settings = settings;

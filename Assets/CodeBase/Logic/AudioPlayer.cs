@@ -15,12 +15,12 @@ namespace CodeBase.Logic
         {
             _persistentProgressService = persistentProgressService;
             _staticData = staticData;
-            persistentProgressService.Settings.OnChangeAudioVolume += ChangeVolume;
-            SetSettings();
         }
 
-        private void ChangeVolume() =>
-            _audioSource.volume = _persistentProgressService.Settings.AudioVolume;
+        private void Start()
+        {
+            SetSettings();
+        }
 
         public void Play(AudioConfigId configId)
         {
@@ -30,7 +30,6 @@ namespace CodeBase.Logic
 
         private void SetSettings()
         {
-            ChangeVolume();
             _audioSource.playOnAwake = false;
             _audioSource.loop = true;
         }

@@ -73,9 +73,13 @@ namespace CodeBase.UI.Services.Factory
         public async UniTask CreateSettings(IWindowService windowService)
         {
             SettingsWindow window = await InstantiateRegister<SettingsWindow>(WindowId.Settings);
-            window.GetComponent<AudioSlider>()?.Construct(_saveLoadService, _persistentProgressService);
-            window.GetComponentInChildren<OpenWindowButton>()?.Construct(windowService);
-            window.GetComponent<ClearProgressButton>()?.Construct(_saveLoadService);
+            window.GetComponentInChildren<OpenWindowButton>().Construct(windowService);
+            window.GetComponent<ClearProgressButton>().Construct(_saveLoadService);
+
+            foreach (AudioSlider slider in window.GetComponents<AudioSlider>())
+            {
+                slider.Construct(_saveLoadService, _persistentProgressService);
+            }
         }
 
         public async UniTask CreateLoadMainMenuStateButton()

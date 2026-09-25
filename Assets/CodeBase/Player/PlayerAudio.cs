@@ -15,12 +15,18 @@ namespace CodeBase.Player
         {
             _persistentProgressService = persistentProgressService;
             _staticDataService = staticDataService;
-            persistentProgressService.Settings.OnChangeAudioVolume += ChangeVolume;
-            ChangeVolume();
         }
-
-        private void ChangeVolume() =>
-            _audioSource.volume = _persistentProgressService.Settings.AudioVolume;
+        private void Start()
+        {
+            _persistentProgressService.Settings.OnSFXChange += Refresh;
+            Refresh();
+        }
+        private void OnDestroy()
+        {
+            _persistentProgressService.Settings.OnSFXChange -= Refresh;
+        }
+        private void Refresh() =>
+            _audioSource.volume = _persistentProgressService.Settings.SFXVolume;
 
         public void Play(AudioConfigId configId) =>
             _audioSource.PlayOneShot(_staticDataService.ForAudio(configId).Clip);
