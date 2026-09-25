@@ -833,6 +833,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SelectLevelSlot (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 4640395027171001310, guid: 47c1cca77af9d2e4ab56111cef512c9b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4640395027171001314, guid: 47c1cca77af9d2e4ab56111cef512c9b, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -1389,7 +1393,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &275464631
 Transform:
   m_ObjectHideFlags: 0
@@ -1419,6 +1423,10 @@ PrefabInstance:
     - target: {fileID: 4640395027171001310, guid: 47c1cca77af9d2e4ab56111cef512c9b, type: 3}
       propertyPath: m_Name
       value: SelectLevelSlot (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640395027171001310, guid: 47c1cca77af9d2e4ab56111cef512c9b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4640395027171001314, guid: 47c1cca77af9d2e4ab56111cef512c9b, type: 3}
       propertyPath: m_RootOrder
@@ -2078,7 +2086,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &530202331
 Transform:
   m_ObjectHideFlags: 0
@@ -2690,7 +2698,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &711884962
 Transform:
   m_ObjectHideFlags: 0
@@ -2906,7 +2914,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &820008354
 Transform:
   m_ObjectHideFlags: 0
@@ -3062,6 +3070,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SelectLevelSlot (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 4640395027171001310, guid: 47c1cca77af9d2e4ab56111cef512c9b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4640395027171001314, guid: 47c1cca77af9d2e4ab56111cef512c9b, type: 3}
       propertyPath: m_RootOrder
       value: 13
@@ -3143,6 +3155,10 @@ PrefabInstance:
     - target: {fileID: 4640395027171001310, guid: 47c1cca77af9d2e4ab56111cef512c9b, type: 3}
       propertyPath: m_Name
       value: SelectLevelSlot (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640395027171001310, guid: 47c1cca77af9d2e4ab56111cef512c9b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4640395027171001314, guid: 47c1cca77af9d2e4ab56111cef512c9b, type: 3}
       propertyPath: m_RootOrder
@@ -4056,7 +4072,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1445648936
 Transform:
   m_ObjectHideFlags: 0
@@ -4090,7 +4106,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1493973328
 Transform:
   m_ObjectHideFlags: 0
@@ -5639,6 +5655,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SelectLevelSlot (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 4640395027171001310, guid: 47c1cca77af9d2e4ab56111cef512c9b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4640395027171001314, guid: 47c1cca77af9d2e4ab56111cef512c9b, type: 3}
       propertyPath: m_RootOrder
       value: 14
@@ -5765,6 +5785,10 @@ PrefabInstance:
     - target: {fileID: 4640395027171001310, guid: 47c1cca77af9d2e4ab56111cef512c9b, type: 3}
       propertyPath: m_Name
       value: SelectLevelSlot (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4640395027171001310, guid: 47c1cca77af9d2e4ab56111cef512c9b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4640395027171001314, guid: 47c1cca77af9d2e4ab56111cef512c9b, type: 3}
       propertyPath: m_RootOrder
