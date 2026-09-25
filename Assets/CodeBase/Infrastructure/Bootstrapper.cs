@@ -1,7 +1,5 @@
-using CodeBase.Infrastructure.Logic;
 using CodeBase.Infrastructure.StatesMachine.States;
 using Cysharp.Threading.Tasks;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure
