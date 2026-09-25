@@ -1,6 +1,8 @@
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Logic;
 using CodeBase.Logic;
+using CodeBase.Services;
+using CodeBase.Services.Analytic;
 using CodeBase.Services.Factory;
 using CodeBase.Services.Input;
 using CodeBase.Services.PersistentProgress;
@@ -92,7 +94,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
 
         private void InitFinish()
         {
-            _componentContainer.Finish.GetComponent<SaveLevelTime>().Construct(_saveLoadService, _persistentProgressService);
+            _componentContainer.Finish.GetComponent<SaveLevelTime>().Construct(_saveLoadService, _persistentProgressService, GetService<IAnalytics>());
             _componentContainer.Finish.GetComponent<LevelTransfer>().Construct(_stateMachine);
         }
 
@@ -121,6 +123,10 @@ namespace CodeBase.Infrastructure.StatesMachine.States
             _inputService.Unsubscribe();
             _persistentProgressService.Settings.UnSubscriber();
             _assetProvider.ReleaseAll();
+        }
+        private T GetService<T>() where T : class, IService
+        {
+            return AllServices.Container.Single<T>();
         }
     }
 }

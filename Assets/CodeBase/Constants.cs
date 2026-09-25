@@ -1,8 +1,6 @@
-using UnityEngine;
-
 namespace CodeBase
 {
-    public class Constants : MonoBehaviour
+    public class Constants
     {
         public const float DefaultWindowAnimationSpeed = 5;
         public const string UIAnimationSpeedKey = "UIAnimationSpeedKey";

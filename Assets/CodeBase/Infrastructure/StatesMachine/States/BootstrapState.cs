@@ -2,6 +2,7 @@ using Assets.Scripts.Services.AssetProvider;
 using CodeBase.Infrastructure.AssetManagement;
 using CodeBase.Infrastructure.Logic;
 using CodeBase.Services;
+using CodeBase.Services.Analytic;
 using CodeBase.Services.Factory;
 using CodeBase.Services.Input;
 using CodeBase.Services.PersistentProgress;
@@ -45,6 +46,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         private void RegisterServices()
         {
             RegisterStaticData();
+            _services.RegisterSingle<IAnalytics>(new UnityAnalyticsService());
             _services.RegisterSingle<IRemoteConfigService>(new RemoteConfig());
             _services.RegisterSingle<IInputService>(new InputService());
             _services.RegisterSingle<IAssetProvider>(new AddressablesLoader());
@@ -53,7 +55,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(_services.Single<IPersistentProgressService>()));
             _services.RegisterSingle<IReloadSceneService>(new ReloadSceneService(_stateMachine, _sceneLoader, _loadCurtain));
             _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>(), _services.Single<IInputService>(), _services.Single<IStaticDataService>(), _services.Single<IReloadSceneService>(), _services.Single<IPersistentProgressService>()));
-            _services.RegisterSingle<IUIFactory>(new UIFactory(_services.Single<IAssetProvider>(), _services.Single<IStaticDataService>(), _services.Single<IGameStateMachine>(), _services.Single<IPersistentProgressService>(), _services.Single<ISaveLoadService>()));
+            _services.RegisterSingle<IUIFactory>(new UIFactory(_services.Single<IAssetProvider>(), _services.Single<IStaticDataService>(), _services.Single<IGameStateMachine>(), _services.Single<IPersistentProgressService>(), _services.Single<ISaveLoadService>(), _services.Single<IAnalytics>()));
             _services.RegisterSingle<IWindowService>(new WindowService(_services.Single<IUIFactory>()));
         }
 

@@ -1,4 +1,6 @@
 ﻿using CodeBase.Data;
+using CodeBase.Logic.Extension;
+using CodeBase.Services.Analytic;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 using UnityEngine;
@@ -11,12 +13,15 @@ namespace CodeBase.Logic
         [SerializeField] private LevelTransfer _levelTransfer;
         [SerializeField] private LevelTimer _levelTimer;
         private ISaveLoadService _saveService;
+        private IAnalytics _analytics;
         private IPersistentProgressService _persistentProgress;
 
-        public void Construct(ISaveLoadService saveService, IPersistentProgressService persistentProgress)
+        public void Construct(ISaveLoadService saveService, IPersistentProgressService persistentProgress, IAnalytics analytics)
         {
             _persistentProgress = persistentProgress;
             _saveService = saveService;
+            _analytics = analytics;
+
             _levelTransfer.OnTransfer += Save;
         }
 
@@ -25,6 +30,7 @@ namespace CodeBase.Logic
             _levelTransfer.OnTransfer -= Save;
             OverwriteOrInitNewLevelProgress();
             _saveService.SavePlayerProgress();
+            _analytics.LevelCompleted(SceneManager.GetActiveScene().name, _levelTimer.GetSeconds().ToLevelTimeSeconds());
         }
 
         private void OverwriteOrInitNewLevelProgress()

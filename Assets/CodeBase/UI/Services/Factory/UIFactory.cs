@@ -2,6 +2,7 @@
 using CodeBase.Infrastructure.StatesMachine;
 using CodeBase.Logic;
 using CodeBase.MapLevel;
+using CodeBase.Services.Analytic;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
@@ -32,14 +33,16 @@ namespace CodeBase.UI.Services.Factory
         private readonly IGameStateMachine _gameStateMachine;
         private readonly IPersistentProgressService _persistentProgressService;
         private readonly ISaveLoadService _saveLoadService;
+        private IAnalytics _analytics;
 
-        public UIFactory(IAssetProvider assetProvider, IStaticDataService staticDataService, IGameStateMachine gameStateMachine, IPersistentProgressService persistentProgressService, ISaveLoadService saveLoadService)
+        public UIFactory(IAssetProvider assetProvider, IStaticDataService staticDataService, IGameStateMachine gameStateMachine, IPersistentProgressService persistentProgressService, ISaveLoadService saveLoadService,IAnalytics analytics)
         {
             _assetProvider = assetProvider;
             _staticDataService = staticDataService;
             _gameStateMachine = gameStateMachine;
             _persistentProgressService = persistentProgressService;
             _saveLoadService = saveLoadService;
+            _analytics = analytics;
         }
 
         public void Clean()
@@ -85,7 +88,7 @@ namespace CodeBase.UI.Services.Factory
         public async UniTask CreateLoadMainMenuStateButton()
         {
             LoadMainMenuStateButton instantiate = await InstantiateRegister<LoadMainMenuStateButton>(WindowId.LoadMainMenuStateButton);
-            instantiate.Construct(_gameStateMachine);
+            instantiate.Construct(_gameStateMachine, _analytics);
         }
 
         public async UniTask CreateMainMenu(IWindowService windowService)

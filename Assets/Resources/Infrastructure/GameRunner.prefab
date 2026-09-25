@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6715753887846187388}
   - component: {fileID: 6715753887846187391}
+  - component: {fileID: 4304104801566370578}
   m_Layer: 0
   m_Name: GameRunner
   m_TagString: Untagged
@@ -45,3 +46,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bootstrapper: {fileID: 3582158412298286651, guid: 43c3a591d6b313b40989594b245af07f, type: 3}
+--- !u!114 &4304104801566370578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6715753887846187390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717916ec25e9a5c44944b3dc377f43cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CodeBase.Logic.BrowserDetector

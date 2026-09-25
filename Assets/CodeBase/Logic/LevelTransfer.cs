@@ -1,7 +1,9 @@
 ﻿using System;
 using CodeBase.Infrastructure.StatesMachine;
 using CodeBase.Infrastructure.StatesMachine.States;
+using CodeBase.Services.Analytic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace CodeBase.Logic
 {
@@ -12,6 +14,7 @@ namespace CodeBase.Logic
         public Action OnTransfer;
 
         private IGameStateMachine _stateMachine;
+        private IAnalytics _analytics;
 
         public void Construct(IGameStateMachine gameStateMachine)
         {
