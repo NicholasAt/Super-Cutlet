@@ -1,6 +1,7 @@
 using CodeBase.Infrastructure.Logic;
 using CodeBase.Infrastructure.StatesMachine;
 using CodeBase.Services;
+using CodeBase.Services.RemoteConfig;
 using Cysharp.Threading.Tasks;
 
 namespace CodeBase.Infrastructure
@@ -9,13 +10,20 @@ namespace CodeBase.Infrastructure
     {
         public GameStateMachine StateMachine { get; }
         private readonly LoadCurtain _curtain;
+
         public Game()
         {
             StateMachine = new GameStateMachine(new SceneLoader(), _curtain = new LoadCurtain(), AllServices.Container);
         }
         public async UniTask Run()
         {
+            await _curtain.ShowInitCurtain();
+
+            IRemoteConfigService remoteConfig = AllServices.Container.Single<IRemoteConfigService>();
+            await remoteConfig.Check();
+
             await _curtain.Init();
+            _curtain.HideInitCurtain();
         }
     }
 }

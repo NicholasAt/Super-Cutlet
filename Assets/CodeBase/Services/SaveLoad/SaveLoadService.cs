@@ -34,7 +34,10 @@ namespace CodeBase.Services.SaveLoad
         private TObj ReadJson<TObj>(string path) =>
             JsonUtility.FromJson<TObj>(PlayerPrefs.GetString(path));
 
-        private void WriteJson(string path, object obj) =>
+        private void WriteJson(string path, object obj)
+        {
             PlayerPrefs.SetString(path, JsonUtility.ToJson(obj));
+            PlayerPrefs.Save();
+        }
     }
 }

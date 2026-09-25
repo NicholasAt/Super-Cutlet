@@ -6,6 +6,7 @@ using CodeBase.Services.Factory;
 using CodeBase.Services.Input;
 using CodeBase.Services.PersistentProgress;
 using CodeBase.Services.ReloadScene;
+using CodeBase.Services.RemoteConfig;
 using CodeBase.Services.SaveLoad;
 using CodeBase.Services.StaticData;
 using CodeBase.UI.Services.Factory;
@@ -44,6 +45,7 @@ namespace CodeBase.Infrastructure.StatesMachine.States
         private void RegisterServices()
         {
             RegisterStaticData();
+            _services.RegisterSingle<IRemoteConfigService>(new RemoteConfig());
             _services.RegisterSingle<IInputService>(new InputService());
             _services.RegisterSingle<IAssetProvider>(new AddressablesLoader());
             _services.RegisterSingle<IGameStateMachine>(_stateMachine);
